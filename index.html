@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rural Development</title>
+  <!-- Poppins & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    :root {
+      --primary: #2a7f62;
+      --primary-light: #3fa37e;
+      --primary-dark: #1e5e48;
+      --accent: #e6b91e;
+      --gray-bg: #f8f9fc;
+      --card-bg: #ffffff;
+      --text-dark: #1e2b3a;
+      --text-muted: #6c7a8a;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+      --radius-card: 18px;
+      --radius-btn: 40px;
+      --transition: all 0.25s ease;
+    }
+
+    body {
+      background: var(--gray-bg);
+      color: var(--text-dark);
+      padding-top: 68px;
+      padding-bottom: 70px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .logo i {
+      font-size: 1.6rem;
+      color: var(--accent);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .header-actions a {
+      color: var(--text-dark);
+      font-size: 1.3rem;
+      transition: var(--transition);
+    }
+
+    .header-actions a:hover {
+      color: var(--primary);
+    }
+
+    .auth-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c0c7ce;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      background: #2ecc71;
+      box-shadow: 0 0 8px rgba(46, 204, 113, 0.5);
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 66px;
+      background: var(--card-bg);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 999;
+      border-top: 1px solid rgba(0, 0, 0, 0.03);
+      padding: 0 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 10px;
+      border-radius: 30px;
+      min-width: 58px;
+      cursor: pointer;
+    }
+
+    .nav-item i {
+      font-size: 1.3rem;
+      transition: var(--transition);
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .nav-item.active i {
+      color: var(--primary);
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: 0px;
+      right: 2px;
+      background: var(--accent);
+      color: #1e2b3a;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 30px;
+      min-width: 16px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      padding: 12px 14px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeUp 0.3s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== HERO SLIDER ===== */
+    .slider-container {
+      position: relative;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 22px;
+      background: linear-gradient(145deg, #d4e9e2, #b8d9cf);
+      height: 180px;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .fallback-slide {
+      background: linear-gradient(135deg, #1e5e48, #2a7f62);
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .fallback-slide i {
+      font-size: 2.4rem;
+      color: var(--accent);
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-dark);
+      z-index: 10;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+
+    .slider-btn:hover {
+      background: white;
+    }
+
+    .slider-btn.prev {
+      left: 10px;
+    }
+    .slider-btn.next {
+      right: 10px;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .dot-slide {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .dot-slide.active {
+      background: white;
+      width: 20px;
+      border-radius: 10px;
+    }
+
+    /* ===== CATEGORY BUBBLES ===== */
+    .category-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 0 14px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-bubble {
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      background: white;
+      color: var(--text-dark);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      cursor: pointer;
+      flex-shrink: 0;
+      border: 2px solid transparent;
+    }
+
+    .category-bubble.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 6px 16px rgba(42, 127, 98, 0.3);
+    }
+
+    /* ===== PRODUCT GRID ===== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (min-width: 600px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+      }
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0, 0, 0, 0.02);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #eef2f5;
+    }
+
+    .product-info {
+      padding: 12px 10px 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-category {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .product-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-price {
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .btn-add {
+      flex: 1;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-btn);
+      padding: 8px 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-add i {
+      font-size: 0.75rem;
+    }
+
+    .btn-add:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-wish {
+      background: #f1f4f8;
+      border: none;
+      border-radius: var(--radius-btn);
+      width: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn-wish.active {
+      color: #e74c3c;
+      background: #fdeaea;
+    }
+
+    .btn-wish:hover {
+      background: #e8edf2;
+    }
+
+    /* ===== MODAL (generic) ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: 28px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 22px 20px 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+      animation: modalPop 0.25s ease;
+      position: relative;
+    }
+
+    @keyframes modalPop {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: #f1f4f8;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: var(--transition);
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background: #e4e9f0;
+    }
+
+    /* ===== AUTH MODAL TABS ===== */
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-radius: 40px;
+      background: #f1f4f8;
+      padding: 4px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border-radius: 40px;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .auth-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--text-dark);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #e0e6ed;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      background: #fafcfd;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(42, 127, 98, 0.1);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-btn);
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .auth-error {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 8px;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    /* ===== CART & WISHLIST ITEMS ===== */
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      padding: 12px;
+      border-radius: 18px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 10px;
+    }
+
+    .list-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: #eef2f5;
+    }
+
+    .list-item-info {
+      flex: 1;
+    }
+
+    .list-item-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .list-item-price {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: #f1f4f8;
+      font-weight: 700;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover {
+      background: #e0e6ed;
+    }
+
+    .remove-btn {
+      background: transparent;
+      border: none;
+      color: #e74c3c;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: var(--transition);
+    }
+
+    .remove-btn:hover {
+      opacity: 0.7;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      color: #d0d8e0;
+    }
+
+    .total-box {
+      background: white;
+      padding: 16px 18px;
+      border-radius: 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 16px 0;
+    }
+
+    /* ===== PROFILE ===== */
+    .profile-card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px 22px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 auto 12px;
+    }
+
+    .profile-field {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f4f8;
+      font-size: 0.9rem;
+    }
+
+    /* ===== ORDERS ===== */
+    .order-card {
+      background: white;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .status-Pending { background: #fff3cd; color: #856404; }
+    .status-Confirmed { background: #d1ecf1; color: #0c5460; }
+    .status-Preparing { background: #ffe5b4; color: #a16200; }
+    .status-Shipped { background: #cce5ff; color: #004085; }
+    .status-Delivered { background: #d4edda; color: #155724; }
+    .status-Cancelled { background: #f8d7da; color: #721c24; }
+
+    /* ===== MENU OVERLAY ===== */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 3000;
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .menu-overlay.show {
+      display: flex;
+    }
+
+    .menu-panel {
+      background: white;
+      width: 78%;
+      max-width: 320px;
+      height: 100%;
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      animation: slideIn 0.25s ease;
+      overflow-y: auto;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-weight: 500;
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .menu-link:hover {
+      background: #f1f4f8;
+    }
+
+    .menu-link i {
+      width: 22px;
+      color: var(--primary);
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 86px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e2b3a;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      z-index: 5000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    /* ===== SEARCH ===== */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border-radius: 40px;
+      padding: 8px 16px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 18px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      padding: 8px 0;
+      font-size: 0.95rem;
+      outline: none;
+      background: transparent;
+    }
+
+    /* ===== ABOUT / CONTACT ===== */
+    .about-content {
+      background: white;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-sm);
+      line-height: 1.7;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 380px) {
+      .product-name { font-size: 0.75rem; }
+      .btn-add { font-size: 0.6rem; padding: 6px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="logo">
+      <i class="fas fa-leaf"></i> Rural Development
+    </div>
+    <div class="header-actions">
+      <a href="#search" id="searchIcon"><i class="fas fa-search"></i></a>
+      <div class="auth-indicator">
+        <span class="dot" id="authDot"></span>
+        <span id="authLabel">Guest</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN SECTIONS ===== -->
+  <main class="main" id="app">
+    <!-- HOME -->
+    <section id="home" class="section active">
+      <div class="slider-container" id="sliderContainer">
+        <div class="fallback-slide" id="fallbackSlide">
+          <i class="fas fa-hotel"></i>
+          <span>Rural Development</span>
+        </div>
+        <button class="slider-btn prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+        <div class="slider-dots" id="sliderDots"></div>
+      </div>
+
+      <div class="category-scroll" id="categoryScroll">
+        <!-- dynamically populated -->
+      </div>
+
+      <div class="product-grid" id="homeProductGrid">
+        <!-- products -->
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section id="search" class="section">
+      <div class="search-bar">
+        <i class="fas fa-search" style="color:var(--text-muted);"></i>
+        <input type="text" id="searchInput" placeholder="Search products, categories...">
+      </div>
+      <div class="product-grid" id="searchResultsGrid"></div>
+      <div class="empty-state" id="searchEmpty" style="display:none;">
+        <i class="fas fa-search"></i>
+        <p>No products found</p>
+      </div>
+    </section>
+
+    <!-- CART -->
+    <section id="cart" class="section">
+      <h3 style="margin-bottom:16px;">My Cart</h3>
+      <div id="cartItemsList"></div>
+      <div id="cartEmpty" class="empty-state">
+        <i class="fas fa-shopping-bag"></i>
+        <p>Your cart is empty</p>
+      </div>
+      <div class="total-box" id="cartTotalBox" style="display:none;">
+        <span>Total</span>
+        <span id="cartTotalAmount">$0</span>
+      </div>
+      <button class="btn-primary" id="checkoutBtn" style="display:none;">Proceed to Checkout <i class="fas fa-arrow-right"></i></button>
+    </section>
+
+    <!-- WISHLIST -->
+    <section id="wishlist" class="section">
+      <h3 style="margin-bottom:16px;">My Wishlist</h3>
+      <div id="wishlistItemsList"></div>
+      <div id="wishlistEmpty" class="empty-state">
+        <i class="fas fa-heart"></i>
+        <p>Your wishlist is empty</p>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section id="orders" class="section">
+      <h3 style="margin-bottom:16px;">My Orders</h3>
+      <div id="ordersList"></div>
+      <div id="ordersEmpty" class="empty-state">
+        <i class="fas fa-box"></i>
+        <p>No orders yet</p>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="section">
+      <div class="profile-card" id="profileCard">
+        <div class="avatar" id="profileAvatar">U</div>
+        <h2 id="profileName">Username</h2>
+        <p style="color:var(--text-muted);font-size:0.85rem;" id="profileEmail">email@example.com</p>
+        <div style="margin-top:18px;text-align:left;">
+          <div class="profile-field"><span>Phone</span><strong id="profilePhone">—</strong></div>
+          <div class="profile-field"><span>Email</span><strong id="profileEmailField">—</strong></div>
+        </div>
+        <button class="btn-primary" id="logoutBtnProfile" style="margin-top:20px;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="about-content">
+        <h2 style="color:var(--primary);margin-bottom:12px;">About Rural Development</h2>
+        <p>Rural Development is a modern e-commerce platform dedicated to bringing quality products to your doorstep. Founded with a passion for rural development and community empowerment, we connect local artisans and trusted suppliers with customers across the region.</p>
+        <p style="margin-top:12px;">Our mission is to provide a seamless shopping experience while supporting sustainable livelihoods. Every purchase contributes to the growth of rural businesses and the preservation of traditional craftsmanship.</p>
+        <p style="margin-top:12px;">We believe in transparency, quality, and customer satisfaction. Thank you for choosing Rural Development — where tradition meets convenience.</p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="about-content">
+        <h2 style="color:var(--primary);margin-bottom:12px;">Contact Us</h2>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="contactName" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="contactEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="contactMessage" rows="4" placeholder="How can we help?"></textarea>
+        </div>
+        <button class="btn-primary" id="sendMessageBtn"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== BOTTOM NAVIGATION ===== -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-route="home"><i class="fas fa-home"></i><span>Home</span></div>
+    <div class="nav-item" data-route="wishlist"><i class="fas fa-heart"></i><span>Wishlist</span><span class="nav-badge" id="wishlistBadge">0</span></div>
+    <div class="nav-item" data-route="cart"><i class="fas fa-shopping-bag"></i><span>Cart</span><span class="nav-badge" id="cartBadge">0</span></div>
+    <div class="nav-item" data-route="menu"><i class="fas fa-bars"></i><span>Menu</span></div>
+  </nav>
+
+  <!-- ===== AUTH MODAL ===== -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeAuthModal"><i class="fas fa-times"></i></button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Login</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-primary">Login <i class="fas fa-sign-in-alt"></i></button>
+        <div class="auth-error" id="loginError"></div>
+      </form>
+      <!-- Register Form -->
+      <form id="registerForm" style="display:none;">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="regUsername" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="regPhone" required placeholder="9876543210">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="regEmail" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" required placeholder="Min 6 characters">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="regConfirmPassword" required placeholder="Repeat password">
+        </div>
+        <button type="submit" class="btn-primary">Register <i class="fas fa-user-plus"></i></button>
+        <div class="auth-error" id="registerError"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT DETAIL MODAL ===== -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-box" id="productModalBox">
+      <button class="modal-close" id="closeProductModal"><i class="fas fa-times"></i></button>
+      <div id="productDetailContent"></div>
+    </div>
+  </div>
+
+  <!-- ===== CHECKOUT MODAL ===== -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeCheckoutModal"><i class="fas fa-times"></i></button>
+      <h3 style="margin-bottom:16px;">Checkout</h3>
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="checkoutName" required placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="checkoutPhone" required placeholder="Phone number">
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <textarea id="checkoutAddress" rows="3" required placeholder="Full delivery address"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Place Order <i class="fas fa-check"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MENU OVERLAY ===== -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-panel" id="menuPanel">
+      <!-- dynamically populated -->
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== FIREBASE MODULES ===== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getDatabase, ref, set, get, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+    // ===== CONFIG =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8oZDcs4Xam6yMY1H1Ecidkgg8aOEwLLk",
+      authDomain: "rural-development-2b6b2.firebaseapp.com",
+      databaseURL: "https://rural-development-2b6b2-default-rtdb.firebaseio.com",
+      projectId: "rural-development-2b6b2",
+      storageBucket: "rural-development-2b6b2.firebasestorage.app",
+      messagingSenderId: "633029236474",
+      appId: "1:633029236474:web:6fafb0bd6b28dbea015b43"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // ===== STATE =====
+    let currentUser = null;
+    let products = [];
+    let categories = [];
+    let sliderImages = [];
+    let cart = {};
+    let wishlist = {};
+    let activeCategory = 'All';
+    let currentSlideIndex = 0;
+    let slideInterval = null;
+
+    // ===== DOM REFS =====
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+
+    const authDot = $('#authDot');
+    const authLabel = $('#authLabel');
+    const cartBadge = $('#cartBadge');
+    const wishlistBadge = $('#wishlistBadge');
+    const toast = $('#toast');
+
+    // ===== UTILS =====
+    function showToast(msg, duration = 2200) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    function formatPrice(price) {
+      return '$' + Number(price).toFixed(2);
+    }
+
+    // ===== ROUTING =====
+    function navigateTo(route) {
+      $$('.section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(route);
+      if (target) target.classList.add('active');
+
+      $$('.nav-item').forEach(n => n.classList.remove('active'));
+      const navItem = document.querySelector(`.nav-item[data-route="${route}"]`);
+      if (navItem) navItem.classList.add('active');
+
+      // If route is home, search, etc. update active nav
+      if (route === 'home') {
+        document.querySelector('.nav-item[data-route="home"]').classList.add('active');
+      }
+
+      window.location.hash = route;
+    }
+
+    function handleHashChange() {
+      const hash = window.location.hash.replace('#', '') || 'home';
+      if (['home','search','cart','wishlist','orders','profile','about','contact'].includes(hash)) {
+        navigateTo(hash);
+      } else {
+        navigateTo('home');
+      }
+    }
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    // ===== NAV BOTTOM =====
+    $$('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const route = item.dataset.route;
+        if (route === 'menu') {
+          openMenu();
+        } else if (route === 'cart' || route === 'wishlist') {
+          if (!currentUser) {
+            openAuthModal();
+            showToast('Please login to view your ' + route);
+          } else {
+            navigateTo(route);
+          }
+        } else {
+          navigateTo(route);
+        }
+      });
+    });
+
+    // ===== MENU =====
+    function openMenu() {
+      const panel = $('#menuPanel');
+      panel.innerHTML = '';
+      const links = currentUser ? [
+        { icon: 'fa-home', label: 'Home', route: 'home' },
+        { icon: 'fa-user', label: 'Profile', route: 'profile' },
+        { icon: 'fa-box', label: 'My Orders', route: 'orders' },
+        { icon: 'fa-heart', label: 'Wishlist', route: 'wishlist' },
+        { icon: 'fa-shopping-bag', label: 'Cart', route: 'cart' },
+        { icon: 'fa-info-circle', label: 'About Us', route: 'about' },
+        { icon: 'fa-envelope', label: 'Contact Us', route: 'contact' },
+        { icon: 'fa-sign-out-alt', label: 'Logout', action: 'logout' }
+      ] : [
+        { icon: 'fa-home', label: 'Home', route: 'home' },
+        { icon: 'fa-info-circle', label: 'About Us', route: 'about' },
+        { icon: 'fa-envelope', label: 'Contact Us', route: 'contact' },
+        { icon: 'fa-sign-in-alt', label: 'Login', action: 'login' }
+      ];
+
+      links.forEach(l => {
+        const el = document.createElement('div');
+        el.className = 'menu-link';
+        el.innerHTML = `<i class="fas ${l.icon}"></i> ${l.label}`;
+        el.addEventListener('click', () => {
+          $('#menuOverlay').classList.remove('show');
+          if (l.action === 'logout') {
+            handleLogout();
+          } else if (l.action === 'login') {
+            openAuthModal();
+          } else if (l.route) {
+            if ((l.route === 'cart' || l.route === 'wishlist' || l.route === 'orders' || l.route === 'profile') && !currentUser) {
+              openAuthModal();
+            } else {
+              navigateTo(l.route);
+            }
+          }
+        });
+        panel.appendChild(el);
+      });
+
+      $('#menuOverlay').classList.add('show');
+    }
+
+    $('#menuOverlay').addEventListener('click', (e) => {
+      if (e.target === $('#menuOverlay')) {
+        $('#menuOverlay').classList.remove('show');
+      }
+    });
+
+    // ===== AUTH =====
+    function openAuthModal() {
+      $('#authModal').classList.add('show');
+    }
+
+    $('#closeAuthModal').addEventListener('click', () => {
+      $('#authModal').classList.remove('show');
+    });
+
+    $('#authModal').addEventListener('click', (e) => {
+      if (e.target === $('#authModal')) $('#authModal').classList.remove('show');
+    });
+
+    $$('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        $$('.auth-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (tab.dataset.tab === 'login') {
+          $('#loginForm').style.display = 'block';
+          $('#registerForm').style.display = 'none';
+        } else {
+          $('#loginForm').style.display = 'none';
+          $('#registerForm').style.display = 'block';
+        }
+      });
+    });
+
+    // ===== LOGIN =====
+    $('#loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = $('#loginEmail').value.trim();
+      const password = $('#loginPassword').value;
+      $('#loginError').textContent = '';
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        $('#authModal').classList.remove('show');
+        showToast('Logged in successfully');
+      } catch (error) {
+        $('#loginError').textContent = error.message;
+      }
+    });
+
+    // ===== REGISTER =====
+    $('#registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = $('#regUsername').value.trim();
+      const phone = $('#regPhone').value.trim();
+      const email = $('#regEmail').value.trim();
+      const password = $('#regPassword').value;
+      const confirm = $('#regConfirmPassword').value;
+      $('#registerError').textContent = '';
+
+      if (password !== confirm) {
+        $('#registerError').textContent = 'Passwords do not match';
+        return;
+      }
+      if (password.length < 6) {
+        $('#registerError').textContent = 'Password must be at least 6 characters';
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        await set(ref(db, 'users/' + user.uid), {
+          username,
+          phoneNumber: phone,
+          email,
+          createdAt: Date.now()
+        });
+        $('#authModal').classList.remove('show');
+        showToast('Account created! Welcome, ' + username);
+      } catch (error) {
+        $('#registerError').textContent = error.message;
+      }
+    });
+
+    // ===== LOGOUT =====
+    async function handleLogout() {
+      try {
+        await signOut(auth);
+        showToast('Logged out');
+        navigateTo('home');
+      } catch (error) {
+        showToast('Logout failed: ' + error.message);
+      }
+    }
+
+    $('#logoutBtnProfile').addEventListener('click', handleLogout);
+
+    // ===== AUTH STATE LISTENER =====
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
+      if (user) {
+        authDot.classList.add('active');
+        authLabel.textContent = 'Logged In';
+        // Load user profile
+        const snap = await get(ref(db, 'users/' + user.uid));
+        if (snap.exists()) {
+          const profile = snap.val();
+          $('#profileName').textContent = profile.username || 'User';
+          $('#profileEmail').textContent = profile.email || user.email;
+          $('#profileEmailField').textContent = profile.email || user.email;
+          $('#profilePhone').textContent = profile.phoneNumber || '—';
+          $('#profileAvatar').textContent = (profile.username || 'U')[0].toUpperCase();
+        } else {
+          $('#profileName').textContent = user.email.split('@')[0];
+          $('#profileEmail').textContent = user.email;
+          $('#profileEmailField').textContent = user.email;
+          $('#profilePhone').textContent = '—';
+          $('#profileAvatar').textContent = 'U';
+        }
+        // Load cart & wishlist
+        loadCart();
+        loadWishlist();
+      } else {
+        authDot.classList.remove('active');
+        authLabel.textContent = 'Guest';
+        cart = {};
+        wishlist = {};
+        updateCartBadge();
+        updateWishlistBadge();
+        renderCart();
+        renderWishlist();
+        $('#profileName').textContent = 'Guest';
+        $('#profileEmail').textContent = '';
+        $('#profileEmailField').textContent = '—';
+        $('#profilePhone').textContent = '—';
+        $('#profileAvatar').textContent = 'G';
+      }
+      renderHomeProducts();
+      renderSearchResults();
+    });
+
+    // ===== LOAD CART / WISHLIST =====
+    function loadCart() {
+      if (!currentUser) return;
+      const cartRef = ref(db, 'users/' + currentUser.uid + '/cart');
+      onValue(cartRef, (snapshot) => {
+        cart = snapshot.val() || {};
+        updateCartBadge();
+        renderCart();
+      });
+    }
+
+    function loadWishlist() {
+      if (!currentUser) return;
+      const wishRef = ref(db, 'users/' + currentUser.uid + '/wishlist');
+      onValue(wishRef, (snapshot) => {
+        wishlist = snapshot.val() || {};
+        updateWishlistBadge();
+        renderWishlist();
+        renderHomeProducts();
+      });
+    }
+
+    function updateCartBadge() {
+      const count = Object.values(cart).reduce((sum, i) => sum + (i.quantity || 1), 0);
+      cartBadge.textContent = count;
+      cartBadge.style.display = count > 0 ? 'block' : 'none';
+    }
+
+    function updateWishlistBadge() {
+      const count = Object.keys(wishlist).length;
+      wishlistBadge.textContent = count;
+      wishlistBadge.style.display = count > 0 ? 'block' : 'none';
+    }
+
+    // ===== PRODUCTS =====
+    function loadProducts() {
+      const productsRef = ref(db, 'products');
+      onValue(productsRef, (snapshot) => {
+        const data = snapshot.val() || {};
+        products = Object.entries(data).map(([id, p]) => ({ id, ...p }));
+        categories = ['All', ...new Set(products.map(p => p.category).filter(Boolean))];
+        renderCategories();
+        renderHomeProducts();
+        renderSearchResults();
+      });
+    }
+
+    function renderCategories() {
+      const container = $('#categoryScroll');
+      container.innerHTML = '';
+      const palette = ['#2a7f62', '#e6b91e', '#3fa37e', '#d96c2b', '#6a4c93', '#e94f4f', '#4a90e2', '#2ecc71', '#e67e22', '#9b59b6'];
+      categories.forEach((cat, idx) => {
+        const bubble = document.createElement('div');
+        bubble.className = 'category-bubble' + (cat === activeCategory ? ' active' : '');
+        bubble.textContent = cat;
+        if (cat !== 'All') {
+          bubble.style.background = palette[idx % palette.length] + '18';
+          bubble.style.color = palette[idx % palette.length];
+        }
+        bubble.addEventListener('click', () => {
+          activeCategory = cat;
+          renderCategories();
+          renderHomeProducts();
+        });
+        container.appendChild(bubble);
+      });
+    }
+
+    function renderHomeProducts() {
+      const grid = $('#homeProductGrid');
+      if (!grid) return;
+      let filtered = products;
+      if (activeCategory !== 'All') {
+        filtered = products.filter(p => p.category === activeCategory);
+      }
+      grid.innerHTML = filtered.map(p => productCardHTML(p)).join('') || '<div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-box-open"></i><p>No products in this category</p></div>';
+      attachProductCardListeners(grid);
+    }
+
+    function renderSearchResults() {
+      const grid = $('#searchResultsGrid');
+      if (!grid) return;
+      const q = ($('#searchInput')?.value || '').toLowerCase().trim();
+      if (!q) {
+        grid.innerHTML = '';
+        $('#searchEmpty').style.display = 'none';
+        return;
+      }
+      const filtered = products.filter(p =>
+        (p.name || '').toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q)
+      );
+      grid.innerHTML = filtered.map(p => productCardHTML(p)).join('');
+      $('#searchEmpty').style.display = filtered.length === 0 ? 'block' : 'none';
+      attachProductCardListeners(grid);
+    }
+
+    function productCardHTML(p) {
+      const inWishlist = wishlist[p.id] ? 'active' : '';
+      return `
+        <div class="product-card" data-id="${p.id}">
+          <img class="product-img" src="${p.imageUrl || 'https://via.placeholder.com/300?text=No+Image'}" alt="${p.name}" loading="lazy">
+          <div class="product-info">
+            <div class="product-category">${p.category || 'General'}</div>
+            <div class="product-name">${p.name || 'Unnamed'}</div>
+            <div class="product-price">${formatPrice(p.price || 0)}</div>
+            <div class="product-actions">
+              <button class="btn-add" data-add="${p.id}"><i class="fas fa-plus"></i> Add</button>
+              <button class="btn-wish ${inWishlist}" data-wish="${p.id}"><i class="fas fa-heart"></i></button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function attachProductCardListeners(container) {
+      container.querySelectorAll('.product-card').forEach(card => {
+        const id = card.dataset.id;
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.btn-add') || e.target.closest('.btn-wish')) return;
+          openProductDetail(id);
+        });
+        card.querySelector('.btn-add')?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          addToCart(id);
+        });
+        card.querySelector('.btn-wish')?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleWishlist(id);
+        });
+      });
+    }
+
+    // ===== PRODUCT DETAIL =====
+    function openProductDetail(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      const inWishlist = wishlist[p.id] ? 'active' : '';
+      $('#productDetailContent').innerHTML = `
+        <img src="${p.imageUrl || 'https://via.placeholder.com/400?text=No+Image'}" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:20px;margin-bottom:16px;background:#eef2f5;">
+        <div class="product-category" style="font-size:0.75rem;">${p.category || 'General'}</div>
+        <h2 style="font-size:1.3rem;margin:4px 0 6px;">${p.name}</h2>
+        <div style="font-weight:700;color:var(--primary);font-size:1.3rem;margin-bottom:10px;">${formatPrice(p.price)}</div>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.6;margin-bottom:18px;">${p.description || 'No description available.'}</p>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-primary" data-add="${p.id}" style="flex:2;"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+          <button class="btn-wish ${inWishlist}" data-wish="${p.id}" style="flex:0 0 52px;border-radius:40px;display:flex;align-items:center;justify-content:center;background:#f1f4f8;border:none;font-size:1.2rem;color:var(--text-muted);"><i class="fas fa-heart"></i></button>
+        </div>
+      `;
+      const box = $('#productDetailContent');
+      box.querySelector('[data-add]')?.addEventListener('click', (e) => { e.stopPropagation(); addToCart(p.id); });
+      box.querySelector('[data-wish]')?.addEventListener('click', (e) => { e.stopPropagation(); toggleWishlist(p.id); });
+      $('#productModal').classList.add('show');
+    }
+
+    $('#closeProductModal').addEventListener('click', () => $('#productModal').classList.remove('show'));
+    $('#productModal').addEventListener('click', (e) => { if (e.target === $('#productModal')) $('#productModal').classList.remove('show'); });
+
+    // ===== CART FUNCTIONS =====
+    async function addToCart(productId, quantity = 1) {
+      if (!currentUser) {
+        openAuthModal();
+        showToast('Please login to add items to cart');
+        return;
+      }
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      const cartRef = ref(db, `users/${currentUser.uid}/cart/${productId}`);
+      const snap = await get(cartRef);
+      const existing = snap.val();
+
+      if (existing) {
+        await update(cartRef, { quantity: (existing.quantity || 1) + quantity });
+      } else {
+        await set(cartRef, {
+          productId,
+          name: product.name,
+          price: product.price,
+          imageUrl: product.imageUrl || '',
+          quantity
+        });
+      }
+      showToast(`${product.name} added to cart`);
+    }
+
+    async function removeFromCart(productId) {
+      if (!currentUser) return;
+      await remove(ref(db, `users/${currentUser.uid}/cart/${productId}`));
+    }
+
+    async function updateCartQuantity(productId, delta) {
+      if (!currentUser) return;
+      const itemRef = ref(db, `users/${currentUser.uid}/cart/${productId}`);
+      const snap = await get(itemRef);
+      if (!snap.exists()) return;
+      const item = snap.val();
+      const newQty = (item.quantity || 1) + delta;
+      if (newQty <= 0) {
+        await removeFromCart(productId);
+      } else {
+        await update(itemRef, { quantity: newQty });
+      }
+    }
+
+    function renderCart() {
+      const container = $('#cartItemsList');
+      const empty = $('#cartEmpty');
+      const totalBox = $('#cartTotalBox');
+      const checkoutBtn = $('#checkoutBtn');
+      const items = Object.values(cart);
+
+      if (!items.length) {
+        container.innerHTML = '';
+        empty.style.display = 'block';
+        totalBox.style.display = 'none';
+        checkoutBtn.style.display = 'none';
+        return;
+      }
+
+      empty.style.display = 'none';
+      totalBox.style.display = 'flex';
+      checkoutBtn.style.display = 'flex';
+
+      let total = 0;
+      container.innerHTML = items.map(item => {
+        const itemTotal = (item.price || 0) * (item.quantity || 1);
+        total += itemTotal;
+        return `
+          <div class="list-item">
+            <img src="${item.imageUrl || 'https://via.placeholder.com/60'}" alt="${item.name}">
+            <div class="list-item-info">
+              <div class="list-item-name">${item.name}</div>
+              <div class="list-item-price">${formatPrice(item.price)}</div>
+            </div>
+            <div class="qty-controls">
+              <button class="qty-btn" data-qty-dec="${item.productId}">−</button>
+              <span>${item.quantity || 1}</span>
+              <button class="qty-btn" data-qty-inc="${item.productId}">+</button>
+              <button class="remove-btn" data-remove="${item.productId}"><i class="fas fa-trash-alt"></i></button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      $('#cartTotalAmount').textContent = formatPrice(total);
+
+      container.querySelectorAll('[data-qty-dec]').forEach(b => b.addEventListener('click', () => updateCartQuantity(b.dataset.qtyDec, -1)));
+      container.querySelectorAll('[data-qty-inc]').forEach(b => b.addEventListener('click', () => updateCartQuantity(b.dataset.qtyInc, 1)));
+      container.querySelectorAll('[data-remove]').forEach(b => b.addEventListener('click', () => removeFromCart(b.dataset.remove)));
+    }
+
+    // ===== WISHLIST FUNCTIONS =====
+    async function toggleWishlist(productId) {
+      if (!currentUser) {
+        openAuthModal();
+        showToast('Please login to manage wishlist');
+        return;
+      }
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      const wishRef = ref(db, `users/${currentUser.uid}/wishlist/${productId}`);
+      const snap = await get(wishRef);
+
+      if (snap.exists()) {
+        await remove(wishRef);
+        showToast('Removed from wishlist');
+      } else {
+        await set(wishRef, {
+          productId,
+          name: product.name,
+          price: product.price,
+          imageUrl: product.imageUrl || ''
+        });
+        showToast('Added to wishlist');
+      }
+    }
+
+    function renderWishlist() {
+      const container = $('#wishlistItemsList');
+      const empty = $('#wishlistEmpty');
+      const items = Object.values(wishlist);
+
+      if (!items.length) {
+        container.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      container.innerHTML = items.map(item => `
+        <div class="list-item">
+          <img src="${item.imageUrl || 'https://via.placeholder.com/60'}" alt="${item.name}">
+          <div class="list-item-info">
+            <div class="list-item-name">${item.name}</div>
+            <div class="list-item-price">${formatPrice(item.price)}</div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="qty-btn" style="width:auto;padding:0 12px;border-radius:30px;background:var(--primary);color:white;" data-move="${item.productId}"><i class="fas fa-shopping-bag"></i></button>
+            <button class="remove-btn" data-remove-wish="${item.productId}"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        </div>
+      `).join('');
+
+      container.querySelectorAll('[data-move]').forEach(b => b.addEventListener('click', async () => {
+        await addToCart(b.dataset.move);
+        await remove(ref(db, `users/${currentUser.uid}/wishlist/${b.dataset.move}`));
+      }));
+      container.querySelectorAll('[data-remove-wish]').forEach(b => b.addEventListener('click', () => {
+        remove(ref(db, `users/${currentUser.uid}/wishlist/${b.dataset.removeWish}`));
+      }));
+    }
+
+    // ===== CHECKOUT =====
+    $('#checkoutBtn').addEventListener('click', () => {
+      if (!currentUser) { openAuthModal(); return; }
+      const profileName = $('#profileName').textContent !== 'Guest' ? $('#profileName').textContent : '';
+      const profilePhone = $('#profilePhone').textContent !== '—' ? $('#profilePhone').textContent : '';
+      $('#checkoutName').value = profileName;
+      $('#checkoutPhone').value = profilePhone;
+      $('#checkoutModal').classList.add('show');
+    });
+
+    $('#closeCheckoutModal').addEventListener('click', () => $('#checkoutModal').classList.remove('show'));
+    $('#checkoutModal').addEventListener('click', (e) => { if (e.target === $('#checkoutModal')) $('#checkoutModal').classList.remove('show'); });
+
+    $('#checkoutForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const name = $('#checkoutName').value.trim();
+      const phone = $('#checkoutPhone').value.trim();
+      const address = $('#checkoutAddress').value.trim();
+      const items = Object.values(cart);
+      if (!items.length) { showToast('Cart is empty'); return; }
+
+      const total = items.reduce((sum, i) => sum + (i.price * (i.quantity || 1)), 0);
+      const orderId = push(ref(db, `orders/${currentUser.uid}`)).key;
+
+      const orderData = {
+        orderId,
+        userId: currentUser.uid,
+        username: name,
+        userEmail: currentUser.email,
+        phoneNumber: phone,
+        shippingAddress: address,
+        items,
+        totalAmount: total,
+        date: Date.now(),
+        status: 'Pending'
+      };
+
+      try {
+        await set(ref(db, `orders/${currentUser.uid}/${orderId}`), orderData);
+        await remove(ref(db, `users/${currentUser.uid}/cart`));
+        $('#checkoutModal').classList.remove('show');
+        showToast('Order placed successfully!');
+        navigateTo('orders');
+      } catch (error) {
+        showToast('Order failed: ' + error.message);
+      }
+    });
+
+    // ===== ORDERS =====
+    function loadOrders() {
+      if (!currentUser) {
+        $('#ordersList').innerHTML = '';
+        $('#ordersEmpty').style.display = 'block';
+        return;
+      }
+      const ordersRef = ref(db, `orders/${currentUser.uid}`);
+      onValue(ordersRef, (snapshot) => {
+        const data = snapshot.val() || {};
+        const orders = Object.values(data);
+        const container = $('#ordersList');
+        const empty = $('#ordersEmpty');
+
+        if (!orders.length) {
+          container.innerHTML = '';
+          empty.style.display = 'block';
+          return;
+        }
+
+        empty.style.display = 'none';
+        container.innerHTML = orders.sort((a,b) => b.date - a.date).map(o => `
+          <div class="order-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-weight:700;font-size:0.85rem;">#${o.orderId?.slice(-8) || 'N/A'}</span>
+              <span class="status-badge status-${o.status || 'Pending'}">${o.status || 'Pending'}</span>
+            </div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px;">
+              ${new Date(o.date).toLocaleDateString()} · ${o.phoneNumber || ''}
+            </div>
+            <div style="font-size:0.85rem;margin-bottom:6px;">
+              ${(o.items || []).map(i => `${i.name} ×${i.quantity || 1} = ${formatPrice(i.price * (i.quantity || 1))}`).join('<br>')}
+            </div>
+            <div style="font-weight:700;color:var(--primary);">Total: ${formatPrice(o.totalAmount)}</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">📍 ${o.shippingAddress || '—'}</div>
+          </div>
+        `).join('');
+      });
+    }
+
+    // ===== SEARCH =====
+    $('#searchInput')?.addEventListener('input', renderSearchResults);
+
+    // ===== CONTACT =====
+    $('#sendMessageBtn').addEventListener('click', async () => {
+      const name = $('#contactName').value.trim();
+      const email = $('#contactEmail').value.trim();
+      const message = $('#contactMessage').value.trim();
+      if (!name || !email || !message) {
+        showToast('Please fill all fields');
+        return;
+      }
+      try {
+        const msgRef = push(ref(db, 'messages'));
+        await set(msgRef, { name, email, message, date: Date.now() });
+        showToast('Message sent successfully!');
+        $('#contactName').value = '';
+        $('#contactEmail').value = '';
+        $('#contactMessage').value = '';
+      } catch (error) {
+        showToast('Failed to send: ' + error.message);
+      }
+    });
+
+    // ===== SLIDER =====
+    function loadSlider() {
+      const sliderRef = ref(db, 'sliderImages');
+      onValue(sliderRef, (snapshot) => {
+        const data = snapshot.val() || {};
+        sliderImages = Object.entries(data).map(([id, v]) => ({ id, url: v.downloadURL || v.url || '' }));
+        renderSlider();
+      });
+    }
+
+    function renderSlider() {
+      const container = $('#sliderContainer');
+      const dots = $('#sliderDots');
+      container.querySelectorAll('.slide:not(.fallback-slide)').forEach(el => el.remove());
+
+      if (!sliderImages.length) {
+        $('#fallbackSlide').style.display = 'flex';
+        dots.innerHTML = '';
+        return;
+      }
+
+      $('#fallbackSlide').style.display = 'none';
+      sliderImages.forEach((img, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'slide' + (idx === 0 ? ' active' : '');
+        slide.style.backgroundImage = `url('${img.url}')`;
+        slide.style.backgroundSize = 'cover';
+        slide.style.backgroundPosition = 'center';
+        container.insertBefore(slide, $('#prevSlide'));
+      });
+
+      dots.innerHTML = sliderImages.map((_, idx) =>
+        `<div class="dot-slide ${idx === 0 ? 'active' : ''}" data-slide="${idx}"></div>`
+      ).join('');
+
+      currentSlideIndex = 0;
+      startSliderInterval();
+
+      // dot listeners
+      dots.querySelectorAll('.dot-slide').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.slide);
+          goToSlide(idx);
+          startSliderInterval();
+        });
+      });
+    }
+
+    function goToSlide(idx) {
+      const slides = document.querySelectorAll('.slide:not(.fallback-slide)');
+      if (!slides.length) return;
+      const dots = document.querySelectorAll('.dot-slide');
+      currentSlideIndex = (idx + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('active', i === currentSlideIndex));
+      dots.forEach((d, i) => d.classList.toggle('active', i === currentSlideIndex));
+    }
+
+    function startSliderInterval() {
+      clearInterval(slideInterval);
+      if (sliderImages.length <= 1) return;
+      slideInterval = setInterval(() => {
+        goToSlide(currentSlideIndex + 1);
+      }, 5000);
+    }
+
+    $('#prevSlide').addEventListener('click', () => { goToSlide(currentSlideIndex - 1); startSliderInterval(); });
+    $('#nextSlide').addEventListener('click', () => { goToSlide(currentSlideIndex + 1); startSliderInterval(); });
+
+    // ===== INIT =====
+    function init() {
+      loadProducts();
+      loadSlider();
+      loadOrders();
+
+      // Set default route
+      if (!window.location.hash || window.location.hash === '#') {
+        window.location.hash = 'home';
+      } else {
+        handleHashChange();
+      }
+
+      // Listen for hash changes to toggle sections
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.replace('#', '') || 'home';
+        if (hash === 'search') {
+          setTimeout(() => $('#searchInput')?.focus(), 100);
+        }
+        if (hash === 'orders') loadOrders();
+      });
+    }
+
+    init();
+
+    // Expose some functions for debugging (optional)
+    window.__app = { navigateTo, showToast };
+
+  </script>
+</body>
+</html>
